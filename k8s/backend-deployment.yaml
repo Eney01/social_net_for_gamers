@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: user0107/social-network:latest
+          imagePullPolicy: Always   # 🟢 обов'язково для оновлень із Docker Hub
+          ports:
+            - containerPort: 5000
+          env:
+            - name: ASPNETCORE_URLS  # 🟢 гарантія, що ASP.NET слухає правильний порт
+              value: "http://0.0.0.0:5000"

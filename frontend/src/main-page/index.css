@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+ #search-bar {
+      position: relative;
+      width: 300px;
+      margin: 20px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px 40px 10px 15px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 25px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-bar input:focus {
+      border-color: #007BFF;
+    }
+
+    
+
+    .search-bar .search-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+
+    
+@theme {
+  --color-regal-primary: #262629;
+  --color-regal-bg: #212124; /* for use bg: bg-regal-bg */
+  --fields-bg: #2C2F36;
+  --active-color: #1AAAF5;
+  --icons-color: #BBBBBE;
+  --secondary-color: #ADADBD;
+  --color-regal-text: #F6F6F6; /* for use text: text-regal-text */
+}
+
+.raleway-font {
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 450;
+  font-style: normal;
+}
