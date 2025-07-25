@@ -7,7 +7,7 @@ kind: Pod
 spec:
   containers:
   - name: jnlp
-    image: user0107/jenkins-agent-docker:latest
+    image: user0107/jenkins-agent-dind:latest
     tty: true
     securityContext:
       privileged: true
@@ -26,12 +26,6 @@ spec:
   }
 
   stages {
-    stage('Start Docker Daemon') {
-      steps {
-        sh 'dockerd > /dev/null 2>&1 & sleep 10'
-      }
-    }
-
     stage('Build Docker') {
       steps {
         dir('backend') {
@@ -57,6 +51,7 @@ spec:
       }
     }
   }
+}
 }
 
 
