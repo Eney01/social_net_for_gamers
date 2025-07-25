@@ -8,25 +8,46 @@ spec:
   containers:
   - name: jnlp
     image: user0107/jenkins-agent-docker:latest
-    args:
-    - \$(JENKINS_SECRET)
-    - \$(JENKINS_NAME)
+    tty: true
+    securityContext:
+      privileged: true
+    volumeMounts:
+      - name: docker-graph
+        mountPath: /var/lib/docker
+  volumes:
+    - name: docker-graph
+      emptyDir: {}
 """
     }
   }
 
+  environment {
+    DOCKER_IMAGE = "user0107/social-net-backend:latest"
+  }
+
   stages {
+    stage('Start Docker Daemon') {
+      steps {
+        sh 'dockerd > /dev/null 2>&1 & sleep 10'
+      }
+    }
+
     stage('Build Docker') {
       steps {
         dir('backend') {
-          sh 'docker build -t user0107/social-net-backend:latest .'
+          sh 'docker build -t $DOCKER_IMAGE .'
         }
       }
     }
 
     stage('Push Docker') {
       steps {
-        sh 'docker push user0107/social-net-backend:latest'
+        withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+          sh '''
+            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+            docker push $DOCKER_IMAGE
+          '''
+        }
       }
     }
 
