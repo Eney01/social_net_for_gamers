@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: user0107/social-frontend:latest   # 🔄 актуальний образ
+          image: user0107/social-net-frontend:latest   # 🔄 актуальний образ
           imagePullPolicy: Always                  # 🔁 завжди тягнути останній з Docker Hub
           ports:
             - containerPort: 80

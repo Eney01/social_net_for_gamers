@@ -1,14 +1,18 @@
-# Build stage
+# Вказуємо новіші образи з .NET 8
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 5000
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY . .
-WORKDIR /src/SocialNetworkForGamers
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet restore "SocialNetworkForGamers/SocialNetworkForGamers.csproj"
+RUN dotnet publish "SocialNetworkForGamers/SocialNetworkForGamers.csproj" -c Release -o /app/publish
 
-# Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM base AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-EXPOSE 5000
+RUN mkdir -p /app/UploadedMedia
+
 ENTRYPOINT ["dotnet", "SocialNetworkForGamers.dll"]
 

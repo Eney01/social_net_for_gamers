@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: user0107/social-network:latest
+          image: user0107/social-net-backend:latest
           imagePullPolicy: Always   # 🟢 обов'язково для оновлень із Docker Hub
           ports:
             - containerPort: 5000
